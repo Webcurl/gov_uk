@@ -1,0 +1,23 @@
+{
+    "name": "drupal/govuk_integrations",
+    "description": "GOV.UK Integrations with assorted GOV.UK services.",
+    "type": "drupal-module",
+    "homepage": "https://drupal.org/project/govuk_integrations",
+    "authors": [
+        {
+            "name": "Martin King",
+            "role": "Developer",
+            "email": "martin.king@webcurl.co.uk"
+        }
+    ],
+    "license": "GPL-2.0+",
+    "minimum-stability": "dev",
+    "require": {
+        "drupal/mobile_number": ">=1.0-alpha5",
+        "alphagov/notifications-php-client": "*",
+        "php-http/guzzle6-adapter": "*",
+        "drupal/smsframework": "*",
+        "drupal/tfa": ">=1.0-alpha4",
+        "drupal/webform": "*"
+    }
+}

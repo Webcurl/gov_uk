@@ -1,0 +1,6 @@
+<?php
+
+/**
+ * @file
+ * Provides basic integration with the GOV.UK Pay system.
+ */

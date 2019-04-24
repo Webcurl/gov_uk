@@ -1,0 +1,5 @@
+confirmation:
+  version: VERSION
+  css:
+    theme:
+      css/confirmation-page.css: {}

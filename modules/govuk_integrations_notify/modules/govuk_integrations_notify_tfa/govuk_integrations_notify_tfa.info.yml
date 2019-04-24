@@ -1,0 +1,8 @@
+name: 'GOV.UK Integrations Notify TFA'
+type: module
+description: 'Provides Two Factor Authentication with the GOV.UK Notify service.'
+package: 'GOV.UK Integrations'
+core: 8.x
+dependencies:
+ - tfa
+ - govuk_integrations_notify

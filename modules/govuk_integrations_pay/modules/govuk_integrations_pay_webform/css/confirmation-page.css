@@ -1,0 +1,19 @@
+#gov_uk_header {
+    background-color: #000000;
+    margin-bottom: 10px;
+}
+
+#gov_uk_header .logo {
+    background-image: url('../images/govuk-logo.jpg');
+    background-size: contain;
+    height: 50px;
+    background-repeat: no-repeat;
+}
+
+.payment-status {
+    font-weight: bold;
+}
+
+#confirmation-message {
+    margin-top: 10px;
+}
