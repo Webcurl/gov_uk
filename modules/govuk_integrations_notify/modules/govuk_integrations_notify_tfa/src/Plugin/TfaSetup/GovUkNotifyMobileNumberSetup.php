@@ -6,11 +6,8 @@ use Drupal\govuk_integrations_notify_tfa\Plugin\TfaValidation\GovUkNotifyMobileN
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
-use Drupal\encrypt\EncryptionProfileManagerInterface;
-use Drupal\encrypt\EncryptServiceInterface;
 use Drupal\tfa\Plugin\TfaSetupInterface;
 use Drupal\user\Entity\User;
-use Drupal\user\UserDataInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use libphonenumber\PhoneNumber;
 

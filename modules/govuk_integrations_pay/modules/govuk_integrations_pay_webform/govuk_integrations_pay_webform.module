@@ -10,6 +10,9 @@ use Drupal\webform\Entity\Webform;
 use Drupal\govuk_integrations_pay\Controller\GovPayController;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 
+/**
+ * Implements hook_theme().
+ */
 function govuk_integrations_pay_webform_theme($existing, $type, $theme, $path) {
   return [
     'govuk_integrations_pay_webform__govuk_confirmation_page' => [

@@ -10,6 +10,19 @@ use Drupal\webform\Entity\Webform;
  */
 class GovPayWebformController extends GovPayController {
 
+  /**
+   * Builds the Confirmation page.
+   *
+   * @param string $uuid
+   *   UUID of the payment to load.
+   * @param string $webform_id
+   *   Optional Webform ID.
+   * @param string $submission_id
+   *   Optional Submission ID.
+   *
+   * @return array
+   *   Render array.
+   */
   public function confirmationPage($uuid, $webform_id = NULL, $submission_id = NULL) {
     // Base variables to return.
     $paymentId = NULL;
