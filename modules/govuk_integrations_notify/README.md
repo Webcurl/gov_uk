@@ -1,5 +1,7 @@
+This module provides an SMS Gateway allowing for text messages to be sent via GOV.UK Notify. It requires a few specific setup steps within GOV.UK Notify itself, some SMS Framework configuration to setup the Gateway, and for an easy demonstration; a Mobile Number field on Users.
+
 Steps to set up:
-- GOV.UK Notify
+- [GOV.UK Notify](https://www.notifications.service.gov.uk)
     - API Key. Set up the API Key(s) to utilise on GOV.UK Notify for the integration.
         - Login to GOV.UK Notify
         - Go to "API integration"
@@ -22,7 +24,7 @@ Steps to set up:
         - Copy the Template ID. It will always show within "Templates", so you do not need to save this anywhere.
 
 
-- SMS Framework
+- SMS Framework (Configuration)
     -  Gateways
         - Create a new SMS Gateway
             - Select the "GOV.UK Notify" Gateway.
@@ -32,7 +34,7 @@ Steps to set up:
             - Save.
     
     
-- Mobile Number
+- Mobile Number (Configuration -> Account settings -> Manage Fields)
     - Field
         - Create a new Mobile Number field on Users.
         - In the Field setup (Edit), Ensure that the Verification Message contains "!code". This is the Verification code which gets sent through to GOV.UK Notify. Without this token working, GOV.UK Notify will not send out a valid verification code.

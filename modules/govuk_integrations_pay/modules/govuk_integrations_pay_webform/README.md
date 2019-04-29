@@ -1,4 +1,4 @@
-This module provides a Webform Element for use within Webforms.
+This module provides a GOV.UK Pay Webform Element for use within Webforms. This element can be used as an GOV.UK Pay enabler for the Webform, providing a fixed value, or can utilise options within the Webform to provide a dynamic value to GOV.UK Pay.
 
 Steps to setup:
 - Go to the relevant Webform that needs to be GOV.UK Pay enabled.
@@ -28,4 +28,6 @@ Steps to setup:
         - This text is also not allowed any type of special character.
     - Confirmation message
         - Markup to display to the user once they are redirected frmo GOV.UK Pay back to your site once payment has been sent.
-          
+- Once the fields are configured, save the Element and Webform.
+
+Once added, the GOV.UK Pay element will force the Webform to redirect to GOV.UK Pay to handle the payment, as defined within the Element configuration. This will bypass default Webform handling upon submission, including emails. It is on the roadmap to invoke these handlers once the user is redirected to the Confirmation page.

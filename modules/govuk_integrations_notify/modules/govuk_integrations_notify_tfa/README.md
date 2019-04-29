@@ -1,3 +1,5 @@
+This module enables Two Factor Authentication (TFA) via the GOV.UK Notify SMS Gateway, setup in the parent module. The SMS Gateway needs to be set up according to the parent module instructions, along with the recommended Mobile Number field on Users for this module to be effective.
+
 Steps to enable TFA with GOV.UK Notify:
 - All previous steps as defined in the parent GOV.UK Notify. These steps must be actioned before the below configuration is setup, as there will be missing fields, API keys and other configuration otherwise.
 - TFA   

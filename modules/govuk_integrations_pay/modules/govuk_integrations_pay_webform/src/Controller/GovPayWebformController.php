@@ -31,6 +31,9 @@ class GovPayWebformController extends GovPayController {
     $paymentMessage = NULL;
     $confirmationMessage = NULL;
 
+    // TODO: Invoke all Webform handlers to trigger default
+    // submission behaviour before being redirected to the
+    // Confirmation page.
     // Find GOV.UK Pay element.
     $webform = Webform::load($webform_id);
     $elements = $webform->getElementsInitialized();
