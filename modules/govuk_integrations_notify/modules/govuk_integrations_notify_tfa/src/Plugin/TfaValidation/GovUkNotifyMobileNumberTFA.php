@@ -216,8 +216,8 @@ class GovUkNotifyMobileNumberTFA extends TfaBasePlugin implements TfaValidationI
     else {
       $verify = $this->verifyCode($values['code']);
       if (!$verify) {
-        $form_state->setError($form['code'], 'Invalid code. Please re-enter your code, or Resend the code.');
-        $form_state->setErrorByName('code', 'Invalid code. Please re-enter your code, or Resend the code.');
+        $messenger = \Drupal::messenger();
+        $messenger->addMessage(t('Invalid code. Please re-enter your code, or click Resend to generate a new code.'), $messenger::TYPE_ERROR);
       }
       return $verify;
     }
