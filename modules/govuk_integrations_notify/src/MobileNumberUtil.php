@@ -395,9 +395,10 @@ class MobileNumberUtil implements MobileNumberUtilInterface {
    */
   public function tfaAccountNumber($uid) {
     $user = User::load($uid);
-    $field_name = $this->getTfaField();
+    $plugin_settings = \Drupal::config('tfa.settings')->get('validation_plugin_settings');
+    $settings = isset($plugin_settings['tfa_govuk_notify_mobile_number']) ? $plugin_settings['tfa_govuk_notify_mobile_number'] : [];
+    $field_name = $settings['user_field'];
     if (
-      $this->isTfaEnabled() &&
       $field_name &&
       !empty($user->get($field_name)->getValue()[0]['value'])
     ) {

@@ -107,11 +107,12 @@ class GovUkNotifyMobileNumberTFA extends TfaBasePlugin implements TfaValidationI
    * {@inheritdoc}
    */
   public function getForm(array $form, FormStateInterface $form_state) {
-    $field_name = $this->mobileNumberUtil->getTfaField();
+    $plugin_settings = \Drupal::config('tfa.settings')->get('validation_plugin_settings');
+    $settings = isset($plugin_settings['tfa_govuk_notify_mobile_number']) ? $plugin_settings['tfa_govuk_notify_mobile_number'] : [];
+    $field_name = $settings['user_field'];
     $user = User::load($this->uid);
     $field = NULL;
     if (
-      $this->mobileNumberUtil->isTfaEnabled() &&
       $field_name
     ) {
       $field = $user->get($field_name)->getValue()[0];
