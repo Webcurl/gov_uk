@@ -1,4 +1,6 @@
-This module provides a GOV.UK Pay Webform Element for use within Webforms. This element can be used as an GOV.UK Pay enabler for the Webform, providing a fixed value, or can utilise options within the Webform to provide a dynamic value to GOV.UK Pay.
+This module provides a GOV.UK Pay Webform Element for use within Webforms.
+This element can be used as an GOV.UK Pay enabler for the Webform, providing
+a fixed value, or can utilise options within the Webform to provide a dynamic value to GOV.UK Pay.
 
 Steps to setup:
 - Go to the relevant Webform that needs to be GOV.UK Pay enabled.
@@ -20,7 +22,8 @@ Steps to setup:
         - Static amount 
             - Provide a static amount to send to GOV.UK Pay.
     - Use default content? 
-        - If ticked, utilise a set of default content to display in place of the element on the form to inform users about the redirection to GOV.UK Pay.
+        - If ticked, utilise a set of default content to display in place
+          of the element on the form to inform users about the redirection to GOV.UK Pay.
         - If unticked, it is expected that you will provide your own markup to explain this process.
     - GOV.UK Pay Summary
         - Text that displays on the GOV.UK Pay page once the user is sent across to GOV.UK Pay.

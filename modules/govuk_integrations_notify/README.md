@@ -1,4 +1,6 @@
-This module provides an SMS Gateway allowing for text messages to be sent via GOV.UK Notify. It requires a few specific setup steps within GOV.UK Notify itself, some SMS Framework configuration to setup the Gateway, and for an easy demonstration; a Mobile Number field on Users.
+This module provides an SMS Gateway allowing for text messages to be sent via GOV.UK Notify. It requires a
+few specific setup steps within GOV.UK Notify itself, some SMS Framework configuration to setup the Gateway,
+and for an easy demonstration; a Mobile Number field on Users.
 
 Steps to set up:
 - [GOV.UK Notify](https://www.notifications.service.gov.uk)
@@ -10,7 +12,8 @@ Steps to set up:
         - Provide a valid name for the API key.
         - Choose the correct type of API key
             - Live -> Live integration with GOV.UK Notify
-            - Team and whitelist -> Test integration. Actually sends text messages. Only sends to members of GOV.UK Notify service and specific whitelisted numbers.
+            - Team and whitelist -> Test integration. Actually sends text messages.
+              Only sends to members of GOV.UK Notify service and specific whitelisted numbers.
             - Test -> Test integration. Doesn't send messages, but does log them within GOV.UK Notify.
         - COPY THE KEY. This key will not be shown again, so save it somewhere.
     - Templates
@@ -37,6 +40,9 @@ Steps to set up:
 - Mobile Number (Configuration -> Account settings -> Manage Fields)
     - Field
         - Create a new Mobile Number field on Users.
-        - In the Field setup (Edit), Ensure that the Verification Message contains "!code". This is the Verification code which gets sent through to GOV.UK Notify. Without this token working, GOV.UK Notify will not send out a valid verification code.
+        - In the Field setup (Edit), Ensure that the Verification Message contains "!code". This is
+          the Verification code which gets sent through to GOV.UK Notify. Without this token working,
+          GOV.UK Notify will not send out a valid verification code.
 
-This will setup a Mobile Number field on Users which, when you try to verify the mobile number, will send a text via GOV.UK Notify.
+This will setup a Mobile Number field on Users which, when you try to verify the mobile number, will send a text
+via GOV.UK Notify.

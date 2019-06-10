@@ -6,7 +6,7 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Build Easy Breadcrumb settings form.
+ * Settings form for GOV.UK pay.
  */
 class GovUkPayGeneralSettingsForm extends ConfigFormBase {
 
@@ -35,19 +35,19 @@ class GovUkPayGeneralSettingsForm extends ConfigFormBase {
       '#title' => 'Settings',
     ];
 
-    $form['settings']['gov_pay__apikey'] = array(
+    $form['settings']['gov_pay__apikey'] = [
       '#title' => 'Active API key',
       '#type' => 'textfield',
       '#default_value' => $config->get('gov_pay__apikey'),
       '#description' => t('The API key used for interacting with GOV.UK Pay.'),
-    );
+    ];
 
-    $form['settings']['gov_pay__reference'] = array(
+    $form['settings']['gov_pay__reference'] = [
       '#title' => 'Payment reference',
       '#type' => 'textfield',
       '#default_value' => $config->get('gov_pay__reference'),
       '#description' => t('The payment reference assigned to all GOV.UK Pay transactions on this site.'),
-    );
+    ];
 
     return parent::buildForm($form, $form_state);
   }

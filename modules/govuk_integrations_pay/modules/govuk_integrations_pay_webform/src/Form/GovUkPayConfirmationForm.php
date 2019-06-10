@@ -8,7 +8,7 @@ use Drupal\govuk_integrations_pay\Controller\GovPayController;
 use Drupal\webform\Entity\Webform;
 
 /**
- * Build Easy Breadcrumb settings form.
+ * Form to display payment confirmation status.
  */
 class GovUkPayConfirmationForm extends FormBase {
 

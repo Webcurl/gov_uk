@@ -88,17 +88,17 @@ class WebformGovUkPay extends WebformMarkupBase {
     $form['govuk_integrations_pay']['amount_provider'] = [
       '#type' => 'radios',
       '#required' => TRUE,
-      '#title' => t('Amount provider'),
-      '#description' => t('Choose how the amount of the GOV.UK Payment will be provided.'),
+      '#title' => $this->t('Amount source'),
+      '#description' => $this->t('Choose how the amount of the GOV.UK Payment will be provided.'),
       '#options' => [
-        'element' => 'Webform element',
-        'static' => 'Static amount',
+        'element' => $this->t('Webform element'),
+        'static' => $this->t('Fixed amount'),
       ],
     ];
     $form['govuk_integrations_pay']['amount_element'] = [
       '#type' => 'select',
-      '#title' => t('Amount element'),
-      '#description' => t('Choose which webform element will provide the value to GOV.UK Pay.'),
+      '#title' => $this->t('Amount element'),
+      '#description' => $this->t('Choose which webform element will provide the value to GOV.UK Pay.'),
       '#options' => $webform_element_list,
       '#states' => [
         'visible' => [
@@ -111,12 +111,12 @@ class WebformGovUkPay extends WebformMarkupBase {
     ];
     $form['govuk_integrations_pay']['amount_static'] = [
       '#type' => 'textfield',
-      '#attributes' => array(
+      '#attributes' => [
         ' type' => 'number',
         ' min' => 1,
-      ),
-      '#title' => t('Amount'),
-      '#description' => t('Choose the amount that a payment will be made for.'),
+      ],
+      '#title' => $this->t('Amount'),
+      '#description' => $this->t('Choose the amount that a payment will be made for.'),
       '#states' => [
         'visible' => [
           ':input[name="properties[amount_provider]"]' => ['value' => 'static'],
@@ -128,20 +128,20 @@ class WebformGovUkPay extends WebformMarkupBase {
     ];
     $form['govuk_integrations_pay']['default_content'] = [
       '#type' => 'checkbox',
-      '#title' => t('Use default content?'),
-      '#description' => t('Show the default content for a GOV.UK Pay enabled form.'),
+      '#title' => $this->t('Output default content?'),
+      '#description' => $this->t('Show the default content for a GOV.UK Pay enabled form.'),
       '#default_value' => TRUE,
     ];
     $form['govuk_integrations_pay']['payment_message'] = [
       '#type' => 'textarea',
-      '#title' => t('GOV.UK Pay summary'),
-      '#description' => t('Text to display to user once they are redirected to GOV.UK Pay.'),
+      '#title' => $this->t('GOV.UK Pay summary'),
+      '#description' => $this->t('Text to display to user once they are redirected to GOV.UK Pay.'),
       '#maxlength' => 255,
     ];
     $form['govuk_integrations_pay']['confirmation_message'] = [
       '#type' => 'webform_html_editor',
-      '#title' => t('Confirmation message'),
-      '#description' => t('Text to display to user once they return to the site from GOV.UK Pay.'),
+      '#title' => $this->t('Confirmation message'),
+      '#description' => $this->t('Text to display to user once they return to the site from GOV.UK Pay.'),
     ];
     return $form;
   }

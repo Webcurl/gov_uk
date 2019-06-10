@@ -250,7 +250,7 @@ class GovUkNotifyMobileNumberTFA extends TfaBasePlugin implements TfaValidationI
    * Return context for this plugin.
    */
   public function getPluginContext() {
-    return array('code' => $this->code, 'verification_token' => !empty($this->verificationToken) ? $this->verificationToken : '');
+    return ['code' => $this->code, 'verification_token' => !empty($this->verificationToken) ? $this->verificationToken : ''];
   }
 
   /**
@@ -265,23 +265,23 @@ class GovUkNotifyMobileNumberTFA extends TfaBasePlugin implements TfaValidationI
     try {
       $message = \Drupal::configFactory()->getEditable('mobile_number.settings')->get('tfa_message');
       $message = $message ? $message : $this->mobileNumberUtil->MOBILE_NUMBER_DEFAULT_SMS_MESSAGE;
-      if (!($this->verificationToken = $this->mobileNumberUtil->sendVerification($this->mobileNumber, $message, $this->code, array('user' => $user)))) {
+      if (!($this->verificationToken = $this->mobileNumberUtil->sendVerification($this->mobileNumber, $message, $this->code, ['user' => $user]))) {
         return FALSE;
       }
 
       // @todo Consider storing date_sent or date_updated to inform user.
-      \Drupal::logger('mobile_number_tfa')->info('TFA validation code sent to user @uid', array('@uid' => $this->context['uid']));
+      \Drupal::logger('mobile_number_tfa')->info('TFA validation code sent to user @uid', ['@uid' => $this->context['uid']]);
       return TRUE;
     }
     catch (\Exception $e) {
       \Drupal::logger('mobile_number_tfa')
         ->error(
           'Send message error to user @uid. Status code: @code, message: @message',
-          array(
+          [
             '@uid' => $this->context['uid'],
             '@code' => $e->getCode(),
             '@message' => $e->getMessage(),
-          )
+          ]
         );
       return FALSE;
     }

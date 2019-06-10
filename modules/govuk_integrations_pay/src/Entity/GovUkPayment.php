@@ -51,9 +51,9 @@ class GovUkPayment extends ContentEntityBase implements GovUkPaymentInterface {
    */
   public static function preCreate(EntityStorageInterface $storage_controller, array &$values) {
     parent::preCreate($storage_controller, $values);
-    $values += array(
+    $values += [
       'user_id' => \Drupal::currentUser()->id(),
-    );
+    ];
   }
 
   /**
@@ -90,76 +90,76 @@ class GovUkPayment extends ContentEntityBase implements GovUkPaymentInterface {
     $fields['payment_id'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Payment ID'))
       ->setDescription(t('The GOV.UK Pay set Payment ID  of the GovUKPayment entity.'))
-      ->setSettings(array(
+      ->setSettings([
         'default_value' => '',
         'max_length' => 255,
         'text_processing' => 0,
-      ))
-      ->setDisplayOptions('view', array(
+      ])
+      ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'string',
         'weight' => -6,
-      ))
+      ])
       ->setDisplayConfigurable('view', TRUE);
 
     $fields['webform_id'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Webform ID'))
       ->setDescription(t('The Webform ID  of the GovUKPayment entity.'))
-      ->setSettings(array(
+      ->setSettings([
         'default_value' => '',
         'max_length' => 255,
         'text_processing' => 0,
-      ))
-      ->setDisplayOptions('view', array(
+      ])
+      ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'string',
         'weight' => -6,
-      ))
+      ])
       ->setDisplayConfigurable('view', TRUE);
 
     $fields['submission_id'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Submission ID'))
       ->setDescription(t('The Webform Submission ID  of the GovUKPayment entity.'))
-      ->setSettings(array(
+      ->setSettings([
         'default_value' => '',
         'max_length' => 255,
         'text_processing' => 0,
-      ))
-      ->setDisplayOptions('view', array(
+      ])
+      ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'string',
         'weight' => -6,
-      ))
+      ])
       ->setDisplayConfigurable('view', TRUE);
 
     $fields['status'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Status'))
       ->setDescription(t('The last saved Status of the GovUKPayment entity.'))
-      ->setSettings(array(
+      ->setSettings([
         'default_value' => '',
         'max_length' => 255,
         'text_processing' => 0,
-      ))
-      ->setDisplayOptions('view', array(
+      ])
+      ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'string',
         'weight' => -6,
-      ))
+      ])
       ->setDisplayConfigurable('view', TRUE);
 
     $fields['amount'] = BaseFieldDefinition::create('integer')
       ->setLabel(t('Amount'))
       ->setDescription(t('The Amount of the GovUKPayment entity.'))
-      ->setSettings(array(
+      ->setSettings([
         'default_value' => '',
         'max_length' => 255,
         'text_processing' => 0,
-      ))
-      ->setDisplayOptions('view', array(
+      ])
+      ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'string',
         'weight' => -6,
-      ))
+      ])
       ->setDisplayConfigurable('view', TRUE);
 
     $fields['created'] = BaseFieldDefinition::create('created')

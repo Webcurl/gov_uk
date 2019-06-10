@@ -50,11 +50,11 @@ class GovPayWebformController extends GovPayController {
 
     // Provide default confirmation message if empty.
     if (is_null($confirmationMessage)) {
-      $confirmationMessage = '
+      $confirmationMessage = $this->t('
         Thank you for making a payment via GOV.UK Pay.<br/>
         If your payment has not shown as complete for over 1 day, 
         please contact us with your payment ID.
-      ';
+      ');
     }
 
     // Fetch on-site payment record.
@@ -80,7 +80,7 @@ class GovPayWebformController extends GovPayController {
         '';
       $amount = isset($getPayment->amount) ?
         '£' . number_format(floatval($getPayment->amount) / 100, 2) :
-        'Payment not found';
+        $this->t('Payment not found');
     }
 
     return [
