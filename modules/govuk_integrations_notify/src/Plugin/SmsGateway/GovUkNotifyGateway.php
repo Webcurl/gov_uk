@@ -5,7 +5,7 @@ namespace Drupal\govuk_integrations_notify\Plugin\SmsGateway;
 use Alphagov\Notifications\Exception\ApiException;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Http\Adapter\Guzzle6\Client;
+use GuzzleHttp\Client;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use GuzzleHttp\ClientInterface;
 use Drupal\sms\Plugin\SmsGatewayPluginBase;
