@@ -13,11 +13,7 @@
     "license": "GPL-2.0+",
     "minimum-stability": "dev",
     "require": {
-        "drupal/mobile_number": ">=1.0-alpha5",
         "alphagov/notifications-php-client": "*",
-        "php-http/guzzle6-adapter": "*",
-        "drupal/smsframework": "*",
-        "drupal/tfa": ">=1.0-alpha4",
-        "drupal/webform": "*"
+        "php-http/guzzle6-adapter": "*"
     }
 }
