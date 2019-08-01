@@ -121,8 +121,9 @@ class GovUkNotifyGateway extends SmsGatewayPluginBase implements ContainerFactor
     $result = new SmsMessageResult();
     $report = new SmsDeliveryReport();
 
-    $code = $sms_message->getOption('code') ? $sms_message->getOption('code') : NULL;
+    $code = $sms_message->getOption('code') ? $sms_message->getOption('code') : "";
     $website = \Drupal::request()->getSchemeAndHttpHost();
+    $message = $sms_message->getMessage() ? $sms_message->getMessage() : "";
 
     $response = NULL;
     foreach ($sms_message->getRecipients() as $recipient) {
@@ -133,6 +134,7 @@ class GovUkNotifyGateway extends SmsGatewayPluginBase implements ContainerFactor
           [
             'code' => $code,
             'website' => $website,
+            'message' => $message,
           ]
         );
       }
