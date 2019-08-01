@@ -1,8 +1,8 @@
 {
-    "name": "drupal/govuk_integrations",
+    "name": "drupal/gov_uk",
     "description": "GOV.UK Integrations with assorted GOV.UK services.",
     "type": "drupal-module",
-    "homepage": "https://drupal.org/project/govuk_integrations",
+    "homepage": "https://drupal.org/project/gov_uk",
     "authors": [
         {
             "name": "Martin King",
