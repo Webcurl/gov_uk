@@ -15,7 +15,7 @@
     "require": {
         "alphagov/notifications-php-client": "*",
         "php-http/guzzle6-adapter": "*",
-        "drupal/mobile_number": ">=1.0-alpha5",
+        "drupal/mobile_number": "*",
         "drupal/smsframework": "*",
         "drupal/tfa": ">=1.0-alpha4",
         "drupal/webform": "*"
