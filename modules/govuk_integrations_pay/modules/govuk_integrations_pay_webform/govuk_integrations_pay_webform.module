@@ -33,7 +33,8 @@ function govuk_integrations_pay_webform_theme($existing, $type, $theme, $path) {
  */
 function govuk_integrations_pay_webform_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
   if (substr($form_id, 0, 18) === 'webform_submission') {
-    foreach (Element::children($form["elements"]) as $cid) {
+    $form['elements'] = $form['elements'] ?? array();
+    foreach (Element::children($form['elements']) as $cid) {
       $element = $form['elements'][$cid];
       if ($element['#type'] === 'webform_govuk_integrations_pay') {
         foreach (array_keys($form['actions']) as $action) {
