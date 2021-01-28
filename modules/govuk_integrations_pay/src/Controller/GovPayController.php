@@ -17,7 +17,7 @@ class GovPayController extends ControllerBase {
    * GovPay constructor.
    */
   public function __construct() {
-    $config = \Drupal::service('config.factory')->getEditable('govuk_integrations_pay.settings');
+    $config = $this->config('govuk_integrations_pay.settings');
     if ($config->get('gov_pay__apikey')) {
       $this->apiKey = $config->get('gov_pay__apikey');
       $this->baseUrl = "https://publicapi.payments.service.gov.uk";

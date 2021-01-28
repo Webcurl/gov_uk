@@ -342,7 +342,7 @@ class MobileNumberUtil implements MobileNumberUtilInterface {
    */
   public function codeHash(PhoneNumber $mobile_number, $token, $code) {
     $number = $this->getCallableNumber($mobile_number);
-    $secret = $this->configFactory->getEditable('mobile_number.settings')
+    $secret = $this->configFactory->get('mobile_number.settings')
       ->get('verification_secret');
     return sha1("$number$secret$token$code");
   }

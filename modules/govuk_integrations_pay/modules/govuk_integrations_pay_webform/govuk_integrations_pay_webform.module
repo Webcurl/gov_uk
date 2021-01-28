@@ -62,7 +62,7 @@ function govuk_integrations_pay_webform_form_alter(array &$form, FormStateInterf
  */
 function _govuk_integrations_pay_webform__submit_handler(array $form, FormStateInterface $form_state) {
   // Load config for GOV.UK Pay.
-  $config = \Drupal::service('config.factory')->getEditable('govuk_integrations_pay.settings');
+  $config = \Drupal::config('govuk_integrations_pay.settings');
 
   // Get Form state variables.
   $values = $form_state->getValues();
