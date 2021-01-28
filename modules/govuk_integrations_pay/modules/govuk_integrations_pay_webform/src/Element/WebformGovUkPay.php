@@ -34,7 +34,7 @@ class WebformGovUkPay extends FormElement {
    *   Final element render array.
    */
   public static function preRenderWebformGovUkPay(array $element) {
-    if ($element['#default_content']) {
+    if ($element['#default_content'] ?? FALSE) {
       // Replace #content with renderable webform HTML editor markup.
       $element['markup'] = WebformHtmlEditor::checkMarkup("
         <div id='-govuk-pay--default-content'>
@@ -45,7 +45,6 @@ class WebformGovUkPay extends FormElement {
           <img src='" . base_path() . drupal_get_path('module', 'govuk_integrations_pay_webform') . '/images/payments.jpg' . "'/>
         </div>
       ", ['tidy' => FALSE]);
-      unset($element['#default_content']);
     }
 
     // Must set wrapper id attribute since we are no longer including #markup.

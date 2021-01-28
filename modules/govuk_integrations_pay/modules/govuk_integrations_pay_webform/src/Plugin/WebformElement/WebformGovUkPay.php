@@ -130,7 +130,6 @@ class WebformGovUkPay extends WebformMarkupBase {
       '#type' => 'checkbox',
       '#title' => $this->t('Output default content?'),
       '#description' => $this->t('Show the default content for a GOV.UK Pay enabled form.'),
-      '#default_value' => TRUE,
     ];
     $form['govuk_integrations_pay']['payment_message'] = [
       '#type' => 'textarea',
