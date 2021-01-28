@@ -2,4 +2,4 @@ name: 'GOV.UK Integrations'
 type: module
 description: 'Provides integration with assorted GOV.UK services.'
 package: 'GOV.UK Integrations'
-core: 8.x
+core_version_requirement: ^8.8 || ^9
