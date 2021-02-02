@@ -7,9 +7,11 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Url;
+use Drupal\govuk_integrations_pay\Entity\GovUkPayment;
 use Drupal\webform\Entity\Webform;
-use Drupal\govuk_integrations_pay\Controller\GovPayController;
 use Drupal\Core\Routing\TrustedRedirectResponse;
+use GuzzleHttp\Psr7\Uri;
 
 /**
  * Implements hook_theme().
@@ -66,7 +68,6 @@ function _govuk_integrations_pay_webform__submit_handler(array $form, FormStateI
 
   // Get Form state variables.
   $values = $form_state->getValues();
-  $inputs = $form_state->getUserInput();
   $build = $form_state->getBuildInfo();
 
   // Fetch Submission ID from submission.
@@ -83,18 +84,12 @@ function _govuk_integrations_pay_webform__submit_handler(array $form, FormStateI
   switch ($govPayElement['#amount_provider']) {
     case 'element':
       if (isset($values[$govPayElement['#amount_element']])) {
-        $amount = floatval($values[$govPayElement['#amount_element']]);
-      }
-      elseif (isset($inputs[$govPayElement['#amount_element']])) {
-        $amount = floatval($inputs[$govPayElement['#amount_element']]);
-      }
-      else {
-        $amount = 0;
+        $amount = intval($values[$govPayElement['#amount_element']]) * 100;
       }
       break;
 
     case 'static':
-      $amount = $govPayElement['#amount_static'] ? floatval($govPayElement['#amount_static']) : 0;
+      $amount = $govPayElement['#amount_static'] ? intval($govPayElement['#amount_static']) * 100 : NULL;
       break;
   }
 
@@ -110,26 +105,34 @@ function _govuk_integrations_pay_webform__submit_handler(array $form, FormStateI
   $uuidService = \Drupal::service('uuid');
   $uuid = $uuidService->generate();
 
-  // Setup GOV.UK Pay Object.
-  $gov = new GovPayController();
-  $params = [
-    'amount' => ($amount * 100),
-    'message' => $message,
+  $route_params = [
     'uuid' => $uuid,
     'webform_id' => $webform->id(),
     'submission_id' => $sid,
-    'reference' => $config->get('gov_pay__reference'),
   ];
+  $url_object = Url::fromRoute('govuk_integrations_pay_webform.confirmation_page', $route_params, ['absolute' => TRUE]);
+  $returnUrl = new Uri($url_object->toString());
 
-  // Allow alterations to the information before sending.
-  \Drupal::moduleHandler()->alter('govuk_integrations_pay_submit', $params);
+  $pay_client = \Drupal::service('govuk_integrations_pay.api_service');
 
-  // Make payment.
-  $payment = $gov->makePayment($params);
+  /** @var Alphagov\Pay\Response\Payment $payment_response */
+  $payment_response = $pay_client->createPayment($amount, $config->get('gov_pay__reference'), $message, $returnUrl);
+
+  // Setup entity record.
+  $payment = GovUkPayment::create([
+    'payment_id' => $payment_response->payment_id,
+    'amount' => $amount,
+    'uuid' => $uuid,
+    'status' => $payment_response->state->status,
+    'webform_id' => $webform->id(),
+    'submission_id' => $sid,
+  ]);
+  $payment->save();
 
   // Setup redirect to GOV.UK Pay.
-  $nextUrl = isset($payment->_links->next_url->href) ? $payment->_links->next_url->href : NULL;
+  $nextUrl = $payment_response->getPaymentPageUrl();
+
   if (!is_null($nextUrl)) {
-    $form_state->setResponse(new TrustedRedirectResponse($nextUrl, 302));
+    $form_state->setResponse(new TrustedRedirectResponse((string) $nextUrl, 302));
   }
 }

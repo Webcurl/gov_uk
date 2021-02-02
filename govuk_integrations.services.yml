@@ -1,0 +1,4 @@
+services:
+  govuk_integrations.http_client_factory:
+    class: Drupal\govuk_integrations\Http\Psr18ClientFactory
+    arguments: ['@http_handler_stack']

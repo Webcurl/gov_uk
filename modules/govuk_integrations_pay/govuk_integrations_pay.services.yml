@@ -3,3 +3,12 @@ services:
     class: Drupal\govuk_integrations_pay\Access\GovUKPaymentAccess
     tags:
       - { name: access_check, applies_to: _govukpayment_access_check }
+
+  govuk_integrations_pay.http_client:
+    class: Http\Adapter\Guzzle6\Client
+    factory: govuk_integrations.http_client_factory:fromOptions
+
+  govuk_integrations_pay.api_service:
+    class: Alphagov\Pay\Client
+    factory: ['Drupal\govuk_integrations_pay\PayClientFactory', 'create']
+    arguments: ['@govuk_integrations_pay.http_client', '@config.factory']

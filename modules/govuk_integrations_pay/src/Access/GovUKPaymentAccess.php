@@ -23,12 +23,15 @@ class GovUKPaymentAccess implements AccessInterface {
     $webform_id = $request->get('webform_id');
     $submission_id = $request->get('submission_id');
 
+
+    // This is an access check, but half the parameters are optional?!
+
     $query = \Drupal::entityQuery('content_entity_govukpayment');
     $query->condition('uuid', $uuid);
     if ($webform_id) {
       $query->condition('webform_id', $webform_id);
     }
-    if ($webform_id) {
+    if ($submission_id) {
       $query->condition('submission_id', $submission_id);
     }
     $entity_ids = $query->execute();

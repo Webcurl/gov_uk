@@ -13,7 +13,8 @@
     "license": "GPL-2.0+",
     "minimum-stability": "dev",
     "require": {
-        "alphagov/notifications-php-client":"*",
+        "alphagov/notifications-php-client": "^2",
+        "alphagov/pay-integration-php": "~1.0.0",
         "php-http/guzzle6-adapter":"*",
         "drupal/mobile_number":"*",
         "drupal/smsframework":"*",
