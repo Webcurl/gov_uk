@@ -1,13 +1,3 @@
-#govuk_integrations_pay_webform.confirmation:
-#  path: 'gov-pay-confirmation/{uuid}/{webform_id}/{submission_id}'
-#  defaults:
-#    _form: '\Drupal\govuk_integrations_pay_webform\Form\GovUkPayConfirmationForm'
-#    uuid: ''
-#    webform_id: ''
-#    submission_id: ''
-#  requirements:
-#    _govukpayment_access_check: 'TRUE'
-
 govuk_integrations_pay_webform.confirmation_page:
   path: 'gov-pay-confirmation/{uuid}/{webform_id}/{submission_id}'
   defaults:
