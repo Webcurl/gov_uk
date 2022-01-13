@@ -1,0 +1,7 @@
+govuk_integrations_notify_email.form:
+  path: '/admin/config/development/govuk_notify_email'
+  defaults:
+    _form: '\Drupal\govuk_integrations_notify_email\Form\GovUkNotifyEmailForm'
+    _title: 'GovUK Notify - Email'
+  requirements:
+    _permission: 'administer site configuration'

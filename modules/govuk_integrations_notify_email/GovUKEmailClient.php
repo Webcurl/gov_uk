@@ -24,7 +24,7 @@ class GovUKEmailClient {
   }
 
   /**
-   *
+   * Send a single email to multiple recipients.
    */
   public function send(EmailMessage $email_message) {
 

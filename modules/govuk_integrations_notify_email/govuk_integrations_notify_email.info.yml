@@ -4,5 +4,4 @@ description: 'Provides basic integration with the GOV.UK Notify (Email) service.
 package: 'GOV.UK Integrations'
 core: 8.x
 dependencies:
- - mobile_number (>=8.x-1.0-alpha5)
  - 'govuk_integrations:govuk_integrations'
