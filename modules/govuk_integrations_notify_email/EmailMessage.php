@@ -79,6 +79,4 @@ class EmailMessage {
   public function getEmailReplyToId() {
     return $this->emailReplyToId;
   }
-
-
 }
