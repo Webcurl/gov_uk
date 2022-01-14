@@ -27,6 +27,7 @@ class GovUKEmailClient {
    */
   public function send(EmailMessage $email_message) {
     $response = NULL;
+    $success = [];
     foreach ($email_message->getRecipients() as $recipient) {
       try {
         $response = $this->client->sendEmail(
@@ -37,23 +38,19 @@ class GovUKEmailClient {
       }
       catch (ApiException $e) {
         // @todo Catch or report or something!
+        watchdog_exception('GovUk Notify Email', $e);
+        $success[] = FALSE;
+      }
+
+      if (!is_null($response)) {
+        $success[] = TRUE;
+      }
+      else {
+        $success[] = FALSE;
       }
     }
 
-    if (!is_null($response)) {
-      $stop = 1;
-      // $report->setStatus(EmailMessageReportStatus::QUEUED);
-      //    $report->setMessageId($code);
-    }
-    else {
-      $stop = 1;
-      // $report->setStatus(EmailMessageReportStatus::ERROR);
-      //    $report->setStatusMessage('Sending message failed.');
-    }
-
-    // @todo review
-    $result = 1;
-    return $result;
+    return $success;
   }
 
 }
