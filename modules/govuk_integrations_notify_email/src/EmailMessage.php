@@ -1,15 +1,17 @@
 <?php
 
-
 namespace Drupal\govuk_integrations_notify_email;
-
 
 class EmailMessage {
 
   private string $template;
+
   private array $personalisation;
+
   private array $recipients;
+
   private string $reference;
+
   private string $emailReplyToId;
 
   public function __construct($template, $recipients, $tokens = [], $reference = '', $emailReplyToId = '') {
@@ -79,4 +81,5 @@ class EmailMessage {
   public function getEmailReplyToId() {
     return $this->emailReplyToId;
   }
+
 }

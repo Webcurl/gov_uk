@@ -1,5 +1,5 @@
 govuk_integrations_notify_email.form:
-  path: '/admin/config/development/govuk_notify_email'
+  path: '/admin/config/govuk_integrations/email'
   defaults:
     _form: '\Drupal\govuk_integrations_notify_email\Form\GovUkNotifyEmailForm'
     _title: 'GovUK Notify - Email'

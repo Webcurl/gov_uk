@@ -16,9 +16,8 @@ class GovUKEmailClient {
    *
    */
   public function __construct() {
-
     $this->client = new GovUKNotify([
-      'apiKey' => \Drupal::config('govuk_notify')->get('apiKey'),
+      'apiKey' => \Drupal::config('govuk_integrations_notify_email.settings')->get('apiKey'),
       'httpClient' => new Client(),
     ]);
   }
@@ -27,7 +26,6 @@ class GovUKEmailClient {
    * Send a single email to multiple recipients.
    */
   public function send(EmailMessage $email_message) {
-
     $response = NULL;
     foreach ($email_message->getRecipients() as $recipient) {
       try {

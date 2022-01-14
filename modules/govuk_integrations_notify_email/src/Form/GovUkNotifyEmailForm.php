@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\govuk_integrations_notify_email;
+namespace Drupal\govuk_integrations_notify_email\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -8,7 +8,7 @@ use Drupal\Core\Form\FormStateInterface;
 class GovUkNotifyEmailForm extends ConfigFormBase {
 
   protected function getEditableConfigNames() {
-    return 'govuk_integrations_notify_email.settings';
+    return ['govuk_integrations_notify_email.settings'];
   }
 
   public function getFormId() {
