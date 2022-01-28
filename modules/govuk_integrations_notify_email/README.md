@@ -21,6 +21,11 @@ Enter it on the configuration page at:
 
 ## Example code
 
+@TODO Example with new code
+@TODO Example of other drupally options
+
+@TODO How to use the interface
+
 Send an email like this:
 
 ```  

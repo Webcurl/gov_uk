@@ -4,4 +4,36 @@ govuk_integrations_notify_email.form:
     _form: '\Drupal\govuk_integrations_notify_email\Form\GovUkNotifyEmailForm'
     _title: 'GovUK Notify - Email'
   requirements:
-    _permission: 'administer site configuration'
+    _permission: 'administer govuk notify email'
+
+govuk_integrations_notify_email.template_list:
+  path: '/admin/config/govuk_integrations/email/templates'
+  defaults:
+    _entity_list: 'govuk_email_template'
+    _title: 'Email Templates'
+  requirements:
+    _permission: 'administer govuk notify email templates'
+
+entity.govuk_email_template.edit_form:
+  path: '/admin/config/govuk_integrations/email/templates/{govuk_email_template}'
+  defaults:
+    _entity_form: govuk_email_template.edit
+    _title: 'Edit template'
+  requirements:
+    _permission: 'administer govuk notify email templates'
+
+entity.govuk_integrations_notify_email.add_form:
+  path: '/admin/config/govuk_integrations/email/templates/add'
+  defaults:
+    _entity_form: govuk_email_template.add
+    _title: 'Add template'
+  requirements:
+    _permission: 'administer govuk notify email templates'
+
+entity.govuk_email_template.delete_form:
+  path: '/admin/config/govuk_integrations/email/templates/{govuk_email_template}/delete'
+  defaults:
+    _entity_form: govuk_email_template.delete
+    _title: 'Add template'
+  requirements:
+    _permission: 'administer govuk notify email templates'
