@@ -18,12 +18,8 @@ class EmailMessage {
     $this->template = $template;
     $this->recipients = $recipients;
     $this->personalisation = $tokens;
-    if ($reference) {
-      $this->reference = $reference;
-    }
-    if ($replyTo) {
-      $this->replyTo = $replyTo;
-    }
+    $this->reference = $reference ?? NULL;
+    $this->replyTo = $replyTo ?? NULL;
   }
 
   /**

@@ -8,25 +8,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class EmailTemplateForm extends EntityForm {
 
-//  /**
-//   * Constructs an ExampleForm object.
-//   *
-//   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
-//   *   The entityTypeManager.
-//   */
-//  public function __construct(EntityTypeManagerInterface $entityTypeManager) {
-//    $this->entityTypeManager = $entityTypeManager;
-//  }
-//
-//  /**
-//   * {@inheritdoc}
-//   */
-//  public static function create(ContainerInterface $container) {
-//    return new static(
-//      $container->get('entity_type.manager')
-//    );
-//  }
-
   public function form(array $form, FormStateInterface $form_state) {
     /** @var \Drupal\govuk_integrations_notify_email\Entity\EmailTemplate $entity */
     $entity = $this->entity;
