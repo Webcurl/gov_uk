@@ -12,17 +12,17 @@ class EmailMessage {
 
   private string $reference;
 
-  private string $emailReplyToId;
+  private string $replyTo;
 
-  public function __construct($template, $recipients, $tokens = [], $reference = '', $emailReplyToId = '') {
+  public function __construct($template, $recipients, $tokens = [], $reference = '', $replyTo = '') {
     $this->template = $template;
     $this->recipients = $recipients;
     $this->personalisation = $tokens;
     if ($reference) {
       $this->reference = $reference;
     }
-    if ($emailReplyToId) {
-      $this->emailReplyToId = $emailReplyToId;
+    if ($replyTo) {
+      $this->replyTo = $replyTo;
     }
   }
 
@@ -78,8 +78,15 @@ class EmailMessage {
   /**
    * @return mixed|string
    */
-  public function getEmailReplyToId() {
-    return $this->emailReplyToId;
+  public function getReplyTo() {
+    return $this->replyTo;
+  }
+
+  /**
+   * @param mixed|string $replyTo
+   */
+  public function setReplyTo($replyTo): void {
+    $this->replyTo = $replyTo;
   }
 
 }

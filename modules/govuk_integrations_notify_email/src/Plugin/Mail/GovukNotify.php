@@ -84,13 +84,19 @@ class GovukNotify implements MailInterface {
 
     $email = FALSE;
 
+    $default_reply_to = \Drupal::config('govuk_integrations_notify_email.settings')->get('replyTo');
+
     // Have we been passed a perfect tidy bundle?
     if (!empty($message['params']['govuk_notify_email'])) {
+      /** @var \Drupal\govuk_integrations_notify_email\EmailMessage $email */
       $email = $message['params']['govuk_notify_email'];
+      if (!$email->getReplyTo()) {
+        $email->setReplyTo($default_reply_to);
+      }
     }
     elseif (!empty($message['govuk_notify_template'])) {
       $recipients = !empty($message['params']['recipients']) ?? [$message['to']];
-      $replyto = !empty($message['reply-to']) ?? NULL;
+      $replyto = !empty($message['reply-to']) ?? $default_reply_to;
       $personalisation = !empty($message['params']['personalisation']) ?? [];
       $reference = !empty($message['params']['reference']) ?? NULL;
       $email = new EmailMessage($message['params']['govuk_notify_template'], $recipients, $personalisation, $reference, $replyto);
@@ -114,7 +120,7 @@ class GovukNotify implements MailInterface {
       }
 
       $recipients = !empty($message['params']['recipients']) ?? [$message['to']];
-      $replyto = !empty($message['reply-to']) ?? NULL;
+      $replyto = !empty($message['reply-to']) ?? $default_reply_to;
       $personalisation = !empty($message['params']['personalisation']) ?? [];
       $reference = !empty($message['params']['reference']) ?? NULL;
       $email = new EmailMessage($template_id, $recipients, $personalisation);
