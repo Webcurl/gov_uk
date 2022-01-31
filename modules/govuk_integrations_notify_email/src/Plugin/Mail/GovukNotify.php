@@ -110,11 +110,13 @@ class GovukNotify implements MailInterface {
       $template = \Drupal::config('govuk_integrations_notify_email.govuk_email_template.' . $template_lookup);
       if ($template->isNew()) {
         // @TODO ERROR we were passed an email but there is no template for it.
+        \Drupal::logger('govuk email send')->error('No template specified for email %lookup', ['%lookup' => $message['id']]);
         return FALSE;
       }
       else {
         $template_id = $template->get('template_id');
         if (!$template_id) {
+          \Drupal::logger('govuk email send')->error('Template not found: %template', ['template' => $template_id]);
           return FALSE;
         }
       }
