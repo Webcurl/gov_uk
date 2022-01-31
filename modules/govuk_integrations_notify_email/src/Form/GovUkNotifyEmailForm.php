@@ -30,10 +30,10 @@ class GovUkNotifyEmailForm extends ConfigFormBase {
 
     $form['replyTo'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Reply-to email address'),
+      '#title' => $this->t('Reply-to email address ID'),
       '#default_value' => $config->get('replyTo'),
-      '#description' => $this->t('The email address that recipients should reply to.'),
-      '#required' => TRUE,
+      '#description' => $this->t('The ID for the email address configured on GOV.UK Notify.'),
+      '#required' => FALSE,
     ];
 
     return $form;
