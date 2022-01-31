@@ -35,7 +35,7 @@ class GovUKEmailClient {
           $email_message->getTemplate(),
           $email_message->getPersonalisation(),
           $email_message->getReference(),
-          $email_message->getReplyTo(),
+          $email_message->getReplyTo()
         );
       }
       catch (ApiException $e) {

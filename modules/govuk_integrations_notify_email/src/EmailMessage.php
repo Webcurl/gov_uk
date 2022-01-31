@@ -65,17 +65,17 @@ class EmailMessage {
   }
 
   /**
-   * @return string
+   * @return mixed|string
    */
-  public function getReference(): string {
-    return $this->reference;
+  public function getReference() {
+    return $this->reference ?? NULL;
   }
 
   /**
    * @return mixed|string
    */
   public function getReplyTo() {
-    return $this->replyTo;
+    return $this->replyTo ?? NULL;
   }
 
   /**
