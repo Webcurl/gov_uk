@@ -5,6 +5,7 @@ namespace Drupal\govuk_integrations_notify_email\Plugin\Mail;
 use Drupal\Core\Mail\MailFormatHelper;
 use Drupal\Core\Mail\MailInterface;
 use Drupal\Core\Site\Settings;
+use Drupal\govuk_integrations_notify_email\EmailMessage;
 use Symfony\Component\Mime\Header\Headers;
 use Symfony\Component\Mime\Header\UnstructuredHeader;
 
@@ -92,26 +93,31 @@ class GovukNotify implements MailInterface {
       $replyto = !empty($message['reply-to']) ?? NULL;
       $personalisation = !empty($message['params']['personalisation']) ?? [];
       $reference = !empty($message['params']['reference']) ?? NULL;
-      $email = new \Drupal\govuk_integrations_notify_email\EmailMessage($message['params']['govuk_notify_template'], $recipients, $personalisation, $reference, $replyto);
+      $email = new EmailMessage($message['params']['govuk_notify_template'], $recipients, $personalisation, $reference, $replyto);
     }
     // Else, maybe just a template ID?
     else {
       // @TODO Try to look up the email template from config.
-      $template = 'todo';
+      $template_id = NULL;
 
       $template_lookup = str_replace('-', '_', $message['id']);
-
       $template = \Drupal::config('govuk_integrations_notify_email.govuk_email_template.' . $template_lookup);
-
-      if (!$template) {
+      if ($template->isNew()) {
         // @TODO ERROR we were passed an email but there is no template for it.
+        return FALSE;
+      }
+      else {
+        $template_id = $template->get('template_id');
+        if (!$template_id) {
+          return FALSE;
+        }
       }
 
       $recipients = !empty($message['params']['recipients']) ?? [$message['to']];
       $replyto = !empty($message['reply-to']) ?? NULL;
       $personalisation = !empty($message['params']['personalisation']) ?? [];
       $reference = !empty($message['params']['reference']) ?? NULL;
-      $email = new \Drupal\govuk_integrations_notify_email\EmailMessage($template, $recipients, $personalisation);
+      $email = new EmailMessage($template_id, $recipients, $personalisation);
     }
 
     $client = new \Drupal\govuk_integrations_notify_email\GovUKEmailClient();
