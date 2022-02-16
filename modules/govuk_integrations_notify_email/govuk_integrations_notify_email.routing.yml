@@ -1,16 +1,16 @@
 govuk_integrations_notify_email.form:
-  path: '/admin/config/govuk_integrations/email'
+  path: '/admin/config/govuk_integrations/email/settings'
   defaults:
     _form: '\Drupal\govuk_integrations_notify_email\Form\GovUkNotifyEmailForm'
-    _title: 'GovUK Notify - Email'
+    _title: 'GovUK Notify Email: Settings'
   requirements:
     _permission: 'administer govuk notify email'
 
 govuk_integrations_notify_email.template_list:
-  path: '/admin/config/govuk_integrations/email/templates'
+  path: '/admin/config/govuk_integrations/email'
   defaults:
     _entity_list: 'govuk_email_template'
-    _title: 'Email Templates'
+    _title: 'GovUK Notify Email: Templates'
   requirements:
     _permission: 'administer govuk notify email templates'
 

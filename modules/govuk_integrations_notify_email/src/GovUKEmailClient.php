@@ -55,4 +55,8 @@ class GovUKEmailClient {
     return $success;
   }
 
+  public function getTemplateList() {
+    return $this->client->listTemplates('email');
+  }
+
 }

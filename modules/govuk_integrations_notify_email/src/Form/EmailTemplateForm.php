@@ -17,27 +17,28 @@ class EmailTemplateForm extends EntityForm {
       '#title' => $this->t('Name'),
       '#description' => $this->t('A more friendly label for this template mapping'),
       '#default_value' => $entity->getLabel(),
-      '#required' => TRUE,
-    ];
-
-    // @TODO Get list of templates from GOVUK API.
-    $form['template_id'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Template ID'),
-      '#description' => $this->t('The template set up on GovUK Notify'),
-      '#default_value' => $entity->getTemplateId(),
-      '#required' => TRUE,
+      '#required' => FALSE,
     ];
 
     $form['email_id'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Email ID'),
-      '#description' => $this->t('The Drupal email ID'),
+      '#type' => 'select',
+      '#title' => $this->t('Email'),
+      '#description' => $this->t('The Drupal email'),
       '#default_value' => $entity->getEmailId(),
       '#required' => TRUE,
       '#machine_name' => [
         'exists' => [$this, 'exist'],
       ],
+      '#options' => govuk_integrations_notify_email_get_email_list(),
+    ];
+
+    $form['template_id'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Template'),
+      '#description' => $this->t('The GovUK Notify template to use'),
+      '#default_value' => $entity->getTemplateId(),
+      '#required' => TRUE,
+      '#options' => govuk_integrations_notify_email_get_template_options(),
     ];
 
     return parent::form($form, $form_state);

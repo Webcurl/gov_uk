@@ -86,6 +86,10 @@ class GovukNotify implements MailInterface {
 
     $default_reply_to = \Drupal::config('govuk_integrations_notify_email.settings')->get('replyTo');
 
+    $email_id = $message['id'];
+    $module = $message['module'];
+    $template_configured = $this->templateLookup($email_id, $module);
+
     // Have we been passed a perfect tidy bundle?
     if (!empty($message['params']['govuk_notify_email'])) {
       /** @var \Drupal\govuk_integrations_notify_email\EmailMessage $email */
@@ -93,7 +97,13 @@ class GovukNotify implements MailInterface {
       if (!$email->getReplyTo()) {
         $email->setReplyTo($default_reply_to);
       }
+
+      // The template is optional, so we check and set it if needed.
+      if (!$email->getTemplate()) {
+        $email->setTemplate($template_configured);
+      }
     }
+    // If we haven't used our fancy email object, then get things the usual way.
     elseif (!empty($message['govuk_notify_template'])) {
       $recipients = !empty($message['params']['recipients']) ?? [$message['to']];
       $replyto = !empty($message['reply-to']) ?? $default_reply_to;
@@ -101,31 +111,15 @@ class GovukNotify implements MailInterface {
       $reference = !empty($message['params']['reference']) ?? NULL;
       $email = new EmailMessage($message['params']['govuk_notify_template'], $recipients, $personalisation, $reference, $replyto);
     }
-    // Else, maybe just a template ID?
+    // Else, what IF we were only passed a template ID!?
     else {
-      // @TODO Try to look up the email template from config.
       $template_id = NULL;
-
-      $template_lookup = str_replace('-', '_', $message['id']);
-      $template = \Drupal::config('govuk_integrations_notify_email.govuk_email_template.' . $template_lookup);
-      if ($template->isNew()) {
-        // @TODO ERROR we were passed an email but there is no template for it.
-        \Drupal::logger('govuk email send')->error('No template specified for email %lookup', ['%lookup' => $message['id']]);
-        return FALSE;
-      }
-      else {
-        $template_id = $template->get('template_id');
-        if (!$template_id) {
-          \Drupal::logger('govuk email send')->error('Template not found: %template', ['template' => $template_id]);
-          return FALSE;
-        }
-      }
 
       $recipients = !empty($message['params']['recipients']) ?? [$message['to']];
       $replyto = !empty($message['reply-to']) ?? $default_reply_to;
       $personalisation = !empty($message['params']['personalisation']) ?? [];
       $reference = !empty($message['params']['reference']) ?? NULL;
-      $email = new EmailMessage($template_id, $recipients, $personalisation);
+      $email = new EmailMessage($template_id, $recipients, $personalisation, $reference, $replyto);
     }
 
     $client = new \Drupal\govuk_integrations_notify_email\GovUKEmailClient();
@@ -133,6 +127,33 @@ class GovukNotify implements MailInterface {
     $successes = array_filter($mail_result);
 
     return count($mail_result) == count($successes);
+  }
+
+  /**
+   * Given an email ID and a module, find the configured template.
+   *
+   * @param string $email_id
+   *   Text identifier for the email being sent.
+   * @param string $module
+   *   Sending module's machine name.
+   *
+   * @return false
+   */
+  public function templateLookup($email_id, $module) {
+    $template_lookup = str_replace('-', '_', $module) . '_' . str_replace('-', '_', $email_id);
+    $template = \Drupal::config('govuk_integrations_notify_email.govuk_email_template.' . $template_lookup);
+    if ($template->isNew()) {
+      // @TODO ERROR we were passed an email but there is no template for it.
+      \Drupal::logger('govuk email send')->error('No template specified for email %lookup by module %module', ['%lookup' => $email_id, '%module' => $module]);
+      return FALSE;
+    }
+    else {
+      $template_id = $template->get('template_id');
+      if (!$template_id) {
+        \Drupal::logger('govuk email send')->error('Template not found: %template', ['template' => $template_id]);
+        return FALSE;
+      }
+    }
   }
 
 }
