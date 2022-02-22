@@ -20,9 +20,18 @@ class EmailTemplateForm extends EntityForm {
       '#required' => FALSE,
     ];
 
+    $form['template_id'] = [
+      '#type' => 'select',
+      '#title' => $this->t('GovUK Template'),
+      '#description' => $this->t('The GovUK Notify template to use'),
+      '#default_value' => $entity->getTemplateId(),
+      '#required' => TRUE,
+      '#options' => govuk_integrations_notify_email_get_template_options(),
+    ];
+
     $form['email_id'] = [
       '#type' => 'select',
-      '#title' => $this->t('Email'),
+      '#title' => $this->t('Send when'),
       '#description' => $this->t('The Drupal email'),
       '#default_value' => $entity->getEmailId(),
       '#required' => TRUE,
@@ -30,15 +39,6 @@ class EmailTemplateForm extends EntityForm {
         'exists' => [$this, 'exist'],
       ],
       '#options' => govuk_integrations_notify_email_get_email_list(),
-    ];
-
-    $form['template_id'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Template'),
-      '#description' => $this->t('The GovUK Notify template to use'),
-      '#default_value' => $entity->getTemplateId(),
-      '#required' => TRUE,
-      '#options' => govuk_integrations_notify_email_get_template_options(),
     ];
 
     return parent::form($form, $form_state);
