@@ -90,47 +90,78 @@ class GovukNotify implements MailInterface {
     if (!empty($message['params']['govuk_notify_email'])) {
       /** @var \Drupal\govuk_integrations_notify_email\EmailMessage $email */
       $email = $message['params']['govuk_notify_email'];
-      if (!$email->getReplyTo()) {
+      if (!$email->getReplyTo() && $default_reply_to) {
         $email->setReplyTo($default_reply_to);
       }
     }
     elseif (!empty($message['govuk_notify_template'])) {
       $recipients = !empty($message['params']['recipients']) ?? [$message['to']];
-      $replyto = !empty($message['reply-to']) ?? $default_reply_to;
       $personalisation = !empty($message['params']['personalisation']) ?? [];
       $reference = !empty($message['params']['reference']) ?? NULL;
-      $email = new EmailMessage($message['params']['govuk_notify_template'], $recipients, $personalisation, $reference, $replyto);
+      $email = new EmailMessage($message['params']['govuk_notify_template'], $recipients, $personalisation, $reference);
+      $replyto = !empty($message['reply-to']) ?? $default_reply_to;
+      if ($replyto ) {
+        $email->setReplyTo($default_reply_to);
+      }
     }
     // Else, maybe just a template ID?
     else {
-      // @TODO Try to look up the email template from config.
-      $template_id = NULL;
-
-      $template_lookup = str_replace('-', '_', $message['id']);
-      $template = \Drupal::config('govuk_integrations_notify_email.govuk_email_template.' . $template_lookup);
-      if ($template->isNew()) {
-        // @TODO ERROR we were passed an email but there is no template for it.
+      // Try to look up the email template from config.
+      $template_id = $this->templateLookup($message['id'], $message['module']);
+      if (!$template_id) {
         return FALSE;
       }
-      else {
-        $template_id = $template->get('template_id');
-        if (!$template_id) {
-          return FALSE;
-        }
-      }
 
-      $recipients = !empty($message['params']['recipients']) ?? [$message['to']];
-      $replyto = !empty($message['reply-to']) ?? $default_reply_to;
+      $recipients = $message['params']['recipients'] ?? [$message['to']];
       $personalisation = !empty($message['params']['personalisation']) ?? [];
-      $reference = !empty($message['params']['reference']) ?? NULL;
       $email = new EmailMessage($template_id, $recipients, $personalisation);
+      $replyto = !empty($message['reply-to']) ?? $default_reply_to;
+      if ($replyto ) {
+        $email->setReplyTo($default_reply_to);
+      }
     }
 
     $client = new \Drupal\govuk_integrations_notify_email\GovUKEmailClient();
-    $mail_result = $client->send($email);
+    $mail_result = FALSE;
+    try {
+      $mail_result = $client->send($email);
+    }
+    catch (Exeption $e) {
+      watchdog_exception('govuk email send', $e, $e->getMessage(), NULL);
+    }
     $successes = array_filter($mail_result);
 
     return count($mail_result) == count($successes);
+  }
+
+  /**
+   * Given an email ID and a module, find the configured template.
+   *
+   * @param string $email_id
+   *   Text identifier for the email being sent.
+   * @param string $module
+   *   Sending module's machine name.
+   *
+   * @return false
+   */
+  public function templateLookup($email_id, $module) {
+    $template_lookup = str_replace('-', '_', $email_id);
+    $template = \Drupal::config('govuk_integrations_notify_email.govuk_email_template.' . $template_lookup);
+    if ($template->isNew()) {
+      // @TODO ERROR we were passed an email but there is no template for it.
+      \Drupal::logger('govuk email send')->error('No template specified for email %lookup by module %module', ['%lookup' => $email_id, '%module' => $module]);
+      return FALSE;
+    }
+    else {
+      $template_id = $template->get('template_id');
+      if (!$template_id) {
+        \Drupal::logger('govuk email send')->error('Template not found: %template', ['template' => $template_id]);
+        return FALSE;
+      }
+      else {
+        return $template_id;
+      }
+    }
   }
 
 }

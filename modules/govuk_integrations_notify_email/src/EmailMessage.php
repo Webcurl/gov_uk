@@ -79,7 +79,7 @@ class EmailMessage {
    * @return mixed|string
    */
   public function getReplyTo() {
-    return $this->replyTo;
+    return $this->replyTo ?? NULL;
   }
 
   /**
