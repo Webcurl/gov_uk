@@ -14,10 +14,10 @@ class EmailMessage {
 
   private string $replyTo;
 
-  public function __construct($template, $recipients, $tokens = [], $reference = '', $replyTo = '') {
-    $this->template = $template;
-    $this->recipients = $recipients;
-    $this->personalisation = $tokens;
+  public function __construct($template = '', $recipients = [], $tokens = [], $reference = '', $replyTo = '') {
+    $this->template = $template ?? '';
+    $this->recipients = $recipients ?? [];
+    $this->personalisation = $tokens ?? [];
     $this->reference = $reference ?? '';
     $this->replyTo = $replyTo ?? '';
   }
