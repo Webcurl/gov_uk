@@ -14,7 +14,7 @@
     "minimum-stability": "dev",
     "require": {
         "alphagov/notifications-php-client":"*",
-        "php-http/guzzle6-adapter":"*",
+        "php-http/guzzle7-adapter":"*",
         "drupal/mobile_number":"*",
         "drupal/smsframework":"*",
         "drupal/tfa":">=1.0-alpha4",

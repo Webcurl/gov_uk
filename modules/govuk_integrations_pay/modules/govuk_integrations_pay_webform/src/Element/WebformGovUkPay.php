@@ -42,7 +42,7 @@ class WebformGovUkPay extends FormElement {
             Once you submit this form, you will be redirected to GOV.UK Pay to complete payment.<br/>
             The following card types are accepted:
           </div>
-          <img src='" . base_path() . drupal_get_path('module', 'govuk_integrations_pay_webform') . '/images/payments.jpg' . "'/>
+          <img src='" . base_path() . \Drupal::service('extension.list.module')->getPath('govuk_integrations_pay_webform') . '/images/payments.jpg' . "'/>
         </div>
       ", ['tidy' => FALSE]);
     }
