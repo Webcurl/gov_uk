@@ -3,7 +3,7 @@
 namespace Drupal\govuk_integrations_notify_email;
 
 use Alphagov\Notifications\Client as GovUKNotify;
-use Http\Adapter\Guzzle6\Client;
+use Http\Adapter\Guzzle7\Client;
 
 /**
  *
