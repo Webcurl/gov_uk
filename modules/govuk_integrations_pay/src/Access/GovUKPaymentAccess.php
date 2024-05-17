@@ -24,6 +24,7 @@ class GovUKPaymentAccess implements AccessInterface {
     $submission_id = $request->get('submission_id');
 
     $query = \Drupal::entityQuery('content_entity_govukpayment');
+    $query->accessCheck(TRUE);
     $query->condition('uuid', $uuid);
     if ($webform_id) {
       $query->condition('webform_id', $webform_id);

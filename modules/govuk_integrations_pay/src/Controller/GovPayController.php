@@ -165,6 +165,7 @@ class GovPayController extends ControllerBase {
 
     // Initial Query.
     $query = \Drupal::entityQuery('content_entity_govukpayment');
+    $query->accessCheck(TRUE);
     $query->condition('uuid', $uuid);
     if ($webform_id) {
       $query->condition('webform_id', $webform_id);
