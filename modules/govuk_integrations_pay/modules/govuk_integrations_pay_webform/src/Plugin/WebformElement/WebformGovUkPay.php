@@ -2,8 +2,10 @@
 
 namespace Drupal\govuk_integrations_pay_webform\Plugin\WebformElement;
 
+use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Mail\MailFormatHelper;
+use Drupal\webform\Plugin\WebformElement\ContainerBase;
 use Drupal\webform\WebformSubmissionInterface;
 use Drupal\webform\Plugin\WebformElement\WebformMarkupBase;
 
@@ -35,6 +37,9 @@ class WebformGovUkPay extends WebformMarkupBase {
       'default_markup' => '',
       'payment_message' => '',
       'confirmation_message' => '',
+      'email_element' => '',
+      'cardholdername_element' => '',
+      'address_element' => '',
     ] + parent::getDefaultProperties();
   }
 
@@ -142,7 +147,49 @@ class WebformGovUkPay extends WebformMarkupBase {
       '#title' => $this->t('Confirmation message'),
       '#description' => $this->t('Text to display to user once they return to the site from GOV.UK Pay.'),
     ];
+
+    $form['govuk_integrations_pay']['email_element']  = [
+      '#type' => 'select',
+      '#title' => $this->t('Email element'),
+      '#options' => $this->getElementOptions(),
+      '#empty_option' => $this->t('-- None --'),
+      '#required' => FALSE,
+    ];
+    $form['govuk_integrations_pay']['cardholdername_element']  = [
+      '#type' => 'select',
+      '#title' => $this->t('Cardholder Name element'),
+      '#options' => $this->getElementOptions(),
+      '#empty_option' => $this->t('-- None --'),
+      '#required' => FALSE,
+    ];
+    $form['govuk_integrations_pay']['address_element']  = [
+      '#type' => 'select',
+      '#title' => $this->t('Address element'),
+      '#options' => $this->getElementOptions(),
+      '#empty_option' => $this->t('-- None --'),
+      '#required' => FALSE,
+    ];
+
     return $form;
+  }
+
+  private function getElementOptions() {
+    $element_manager = \Drupal::service('plugin.manager.webform.element');
+
+    $elements = $this->webform->getElementsInitializedAndFlattened();
+
+    foreach ($elements as $element_key => $element) {
+      $element_plugin = $element_manager->getElementInstance($element, $this->webform);
+      if ($element_plugin instanceof ContainerBase
+        || $element_plugin instanceof WebformMarkupBase
+      || $element_plugin instanceof \Drupal\govuk_integrations_pay_webform\Element\WebformGovUkPay) {
+        continue;
+      }
+      $element_title = (isset($element['#title'])) ? new FormattableMarkup('@title (@key)', ['@title' => $element['#title'], '@key' => $element_key]) : $element_key;
+      $options[$element_key] = $element_title;
+    }
+
+    return $options;
   }
 
 }

@@ -98,8 +98,25 @@ function _govuk_integrations_pay_webform__submit_handler(array $form, FormStateI
       break;
   }
 
+
+  $token_svc = \Drupal::token();
+  $token_vars = ['webform_submission' => $submission];
+
+  $address_token_base = "[webform_submission:values:" . $govPayElement['#address_element'];
+
+  $cardholder_details = [
+    "cardholder_name" =>  $token_svc->replacePlain("[webform_submission:values:" . $govPayElement['#cardholdername_element'] . ":value]", $token_vars),
+    "billing_address" => [
+      "line1" =>  $token_svc->replacePlain($address_token_base . ':address:value]', $token_vars),
+      "line2" =>  $token_svc->replacePlain($address_token_base . ':address_2:value]', $token_vars),
+      "postcode" =>  $token_svc->replacePlain($address_token_base . ':postal_code:value]', $token_vars),
+      "city" =>  $token_svc->replacePlain($address_token_base . ':city:value]', $token_vars),
+      "country" =>  $token_svc->replacePlain($address_token_base . ':country:value]', $token_vars),
+    ]
+  ];
+
   // Fetch payment message from element.
-  $message = $govPayElement['#payment_message'] ? $govPayElement['#payment_message'] : $webform->label();
+  $message = $govPayElement['#payment_message'] ?: $webform->label();
 
   // Reduce message length (GOV.UK Pay accepts 255 characters max).
   if (strlen($message) > 254) {
@@ -115,10 +132,12 @@ function _govuk_integrations_pay_webform__submit_handler(array $form, FormStateI
   $params = [
     'amount' => ($amount * 100),
     'message' => $message,
+    "email" =>  $token_svc->replacePlain("[webform_submission:values:" . $govPayElement['#email_element'] . ":value]", $token_vars),
     'uuid' => $uuid,
     'webform_id' => $webform->id(),
     'submission_id' => $sid,
     'reference' => $config->get('gov_pay__reference'),
+    'prefilled_cardholder_details' => $cardholder_details,
   ];
 
   // Allow alterations to the information before sending.

@@ -100,11 +100,16 @@ class GovPayController extends ControllerBase {
         ];
         $reqBody = [
           "amount" => $params['amount'],
+          "email" => $params['email'] ?? "",
           "reference" => $reference,
           "return_url" => $returnUrl,
           "description" => $params['message'],
           "language" => "en",
         ];
+
+        if (!empty($params['prefilled_cardholder_details'])) {
+          $reqBody['prefilled_cardholder_details'] = $params['prefilled_cardholder_details'];
+        }
 
         $jsonBody = json_encode($reqBody, JSON_UNESCAPED_SLASHES);
         // Make request.

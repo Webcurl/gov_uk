@@ -52,7 +52,7 @@ class GovPayWebformController extends GovPayController {
     if (is_null($confirmationMessage)) {
       $confirmationMessage = $this->t('
         Thank you for making a payment via GOV.UK Pay.<br/>
-        If your payment has not shown as complete for over 1 day, 
+        If your payment has not shown as complete for over 1 day,
         please contact us with your payment ID.
       ');
     }
@@ -89,6 +89,7 @@ class GovPayWebformController extends GovPayController {
       '#payment_amount' => $amount,
       '#payment_status' => $paymentStatus,
       '#payment_message' => $paymentMessage,
+      '#transaction_id' => $uuid,
       '#confirmation_message' => $confirmationMessage,
     ];
   }
